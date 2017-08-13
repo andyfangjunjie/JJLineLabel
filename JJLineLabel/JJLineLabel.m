@@ -38,10 +38,8 @@
 }
 #pragma mark - 初始化
 - (void)setup {
-    self.lineColor = self.textColor;
-    self.lineHeight = 1.0;
-    self.linePosition = JJLineLabelPositionNone;
-    
+    if (!_lineColor) _lineColor = self.textColor;
+    if (!_lineHeight) _lineHeight = 1.0;
     [self setNeedsDisplay];
 }
 - (void)drawRect:(CGRect)rect {
@@ -55,7 +53,7 @@
     CGFloat y = 0.0;
     switch (self.linePosition) {
         case JJLineLabelPositionMiddle: {
-            y = (height-1)/2;
+            y = (height - self.lineHeight) / 2;
             break;
         }
         case JJLineLabelPositionBottom: {
@@ -66,7 +64,7 @@
             break;
     }
     [self.lineColor set];
-
+    
     UIRectFill(CGRectMake(0, y, width, self.lineHeight));
 }
 
